@@ -37,5 +37,9 @@
     "postcss-scss": "^1.0.2",
     "rimraf": "^2.6.2",
     "webpack": "^3.9.1"
+  },
+  "dependencies": {
+    "photon": "git+ssh://git@github.com:connors/photon.git",
+    "vue": "^2.5.9"
   }
 }
