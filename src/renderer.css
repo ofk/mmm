@@ -1,0 +1,11 @@
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+p {
+  & em:lang(ja) {
+    font-style: normal;
+    text-emphasis: sesame;
+  }
+}
