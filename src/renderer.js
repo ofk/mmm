@@ -57,7 +57,11 @@ const app = new Vue({
       this.views.splice(this.viewIndex, 1, newView);
     },
     jumpView(dir) {
-      this.viewIndex = (this.viewIndex + dir + this.views.length) % this.views.length;
+      const oldViewIndex = this.viewIndex;
+      this.viewIndex = (oldViewIndex + dir + this.views.length) % this.views.length;
+      if (this.viewIndex === oldViewIndex) {
+        viewNode.reload();
+      }
     },
     newView() {
       if (this.view.url) {
