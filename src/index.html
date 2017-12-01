@@ -29,7 +29,8 @@
 
           <div class="btn-group">
             <span class="icon icon-hourglass"></span>
-            <input class="form-control" type="number" min="0" v-model.number="editingView.time" v-on:change="setView({time:editingView.time})">
+            <input class="form-control" type="number" min="1" v-model.number="editingView.time" v-on:change="setView({time:editingView.time})">
+            <!-- 0 is skip mode -->
           </div>
 
           <div class="btn-group">
