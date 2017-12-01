@@ -36,6 +36,7 @@ const app = new Vue({
     views: null,
     viewIndex: 0,
     editingView: {},
+    visibility: false,
   },
   watch: {
     view(newView) {
@@ -76,8 +77,19 @@ const app = new Vue({
   },
 });
 
-ipcRenderer.on('loadConfig', (event, { views }) => {
-  app.views = views || [];
+ipcRenderer.on('loadConfig', (event, { config, visibility }) => {
+  app.views = config.views || [];
+  app.visibility = visibility;
 });
 
 ipcRenderer.send('requestConfig', { id });
+
+ipcRenderer.on('toggleMenu', (event, { visibility }) => {
+  app.visibility = visibility;
+});
+
+window.addEventListener('keydown', (event) => {
+  if (event.ctrlKey && event.keyCode === 77) { // ctrl + m
+    ipcRenderer.send('toggleMenu');
+  }
+});

@@ -50,8 +50,20 @@ app.on('window-all-closed', () => {
   app.quit();
 });
 
+let visibility = true;
+
 ipcMain.on('requestConfig', (event, { id }) => {
-  event.sender.send('loadConfig', windowsInfo.get(id).config);
+  event.sender.send('loadConfig', {
+    config: windowsInfo.get(id).config,
+    visibility,
+  });
+});
+
+ipcMain.on('toggleMenu', () => {
+  visibility = !visibility;
+  windowsInfo.forEach(({ window }) => {
+    window.webContents.send('toggleMenu', { visibility });
+  });
 });
 
 ipcMain.on('closeWindow', (event, { id }) => {
