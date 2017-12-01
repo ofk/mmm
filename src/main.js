@@ -24,26 +24,26 @@ const createWindow = (config) => {
   windowsInfo.set(id, { window, config });
 };
 
-const configPath = path.join(app.getAppPath(), 'config.json');
+const appConfigPath = path.join(app.getAppPath(), 'config.json');
 
 app.on('ready', () => {
-  let config;
+  let appConfig;
 
   try {
-    config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+    appConfig = JSON.parse(fs.readFileSync(appConfigPath, 'utf-8'));
   } catch (e) {
-    config = {};
+    appConfig = {};
   }
 
-  if (!config.panels) {
-    config.panels = [];
+  if (!appConfig.panels) {
+    appConfig.panels = [];
   }
 
-  if (!config.panels.length) {
-    config.panels.push({});
+  if (!appConfig.panels.length) {
+    appConfig.panels.push({});
   }
 
-  config.panels.forEach(createWindow);
+  appConfig.panels.forEach(createWindow);
 });
 
 app.on('window-all-closed', () => {
@@ -51,6 +51,11 @@ app.on('window-all-closed', () => {
 });
 
 let visibility = true;
+
+ipcMain.on('updateConfig', (event, { id, config }) => {
+  const info = windowsInfo.get(id);
+  windowsInfo.set(id, Object.assign({}, info, { config }));
+});
 
 ipcMain.on('requestConfig', (event, { id }) => {
   event.sender.send('loadConfig', {
@@ -60,10 +65,17 @@ ipcMain.on('requestConfig', (event, { id }) => {
 });
 
 ipcMain.on('toggleMenu', () => {
+  const appConfig = {
+    panels: [],
+  };
   visibility = !visibility;
-  windowsInfo.forEach(({ window }) => {
+  windowsInfo.forEach(({ window, config }) => {
+    appConfig.panels.push(Object.assign({}, config, { bounds: window.getBounds() }));
     window.webContents.send('toggleMenu', { visibility });
   });
+  if (!visibility) {
+    fs.writeFileSync(appConfigPath, JSON.stringify(appConfig, null, '  '));
+  }
 });
 
 ipcMain.on('closeWindow', (event, { id }) => {

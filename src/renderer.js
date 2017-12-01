@@ -55,6 +55,12 @@ const app = new Vue({
     setView(newViewDiff) {
       const newView = Object.assign({}, this.view, newViewDiff);
       this.views.splice(this.viewIndex, 1, newView);
+      ipcRenderer.send('updateConfig', {
+        id,
+        config: {
+          views: this.views,
+        },
+      });
     },
     jumpView(dir) {
       const oldViewIndex = this.viewIndex;
