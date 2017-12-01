@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { app, BrowserWindow } from 'electron';
+import { app, ipcMain, BrowserWindow } from 'electron';
 import path from 'path';
 import url from 'url';
 import fs from 'fs';
 
-const windowConfigs = new Map();
+const windowsInfo = new Map();
 const createWindow = (config) => {
   let window = new BrowserWindow(Object.assign({ width: 800, height: 600, frame: false }, config.bounds || {}));
   const id = window.id.toString();
@@ -17,11 +17,11 @@ const createWindow = (config) => {
   }));
 
   window.on('closed', () => {
-    windowConfigs.delete(id);
+    windowsInfo.delete(id);
     window = null;
   });
 
-  windowConfigs.set(id, config);
+  windowsInfo.set(id, { window, config });
 };
 
 const configPath = path.join(app.getAppPath(), 'config.json');
@@ -48,4 +48,16 @@ app.on('ready', () => {
 
 app.on('window-all-closed', () => {
   app.quit();
+});
+
+ipcMain.on('requestConfig', (event, { id }) => {
+  event.sender.send('loadConfig', windowsInfo.get(id).config);
+});
+
+ipcMain.on('closeWindow', (event, { id }) => {
+  windowsInfo.get(id).window.close();
+});
+
+ipcMain.on('newPanel', () => {
+  createWindow({});
 });

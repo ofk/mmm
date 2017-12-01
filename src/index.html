@@ -9,45 +9,45 @@
       <header class="toolbar toolbar-header">
         <div class="toolbar-actions">
           <div class="btn-group">
-            <button class="btn btn-default">
+            <button class="btn btn-default" v-on:click="newPanel">
               <span class="icon icon-popup"></span>
             </button>
-            <button class="btn btn-default">
+            <button class="btn btn-default" v-on:click="newView">
               <span class="icon icon-plus"></span>
             </button>
           </div>
 
           <div class="btn-group">
             <span class="icon icon-home"></span>
-            <input class="form-control" type="url" value="http://example.com/">
+            <input class="form-control" type="url" v-model="editingView.url" v-on:keyup.enter="setView({url:editingView.url})">
           </div>
 
           <div class="btn-group">
             <span class="icon icon-search"></span>
-            <input class="form-control" type="number" value="0">
+            <input class="form-control" type="number" min="-8" max="9" v-model.number="editingView.zoom" v-on:change="setView({zoom:editingView.zoom})">
           </div>
 
           <div class="btn-group">
             <span class="icon icon-hourglass"></span>
-            <input class="form-control" type="number" value="0">
+            <input class="form-control" type="number" min="0" v-model.number="editingView.time" v-on:change="setView({time:editingView.time})">
           </div>
 
           <div class="btn-group">
-            <button class="btn btn-default">
+            <button class="btn btn-default" v-on:click="jumpView(-1)">
               <span class="icon icon-left-open"></span>
             </button>
-            <button class="btn btn-default">
+            <button class="btn btn-default" v-on:click="jumpView(1)">
               <span class="icon icon-right-open"></span>
             </button>
           </div>
 
-          <button class="btn btn-default">
+          <button class="btn btn-default" v-on:click="killView">
             <span class="icon icon-cancel-circled"></span>
           </button>
         </div>
       </header>
     </div>
 
-    <webview id="view" src="http://example.com/" autosize="on"></webview>
+    <webview id="view" autosize="on"></webview>
   </body>
 </html>
