@@ -2,22 +2,52 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>MMM</title>
   </head>
   <body>
-    <div class="container">
-      <div class="jumbotron">
-        <h1>Hello World<i class="glyphicon glyphicon-heart"></i></h1>
-        <p>
-          <!-- All of the Node.js APIs are available in this renderer process. -->
-          We are using Node.js <script>document.write(process.versions.node)</script>,
-          Chromium <script>document.write(process.versions.chrome)</script>,
-          and Electron <script>document.write(process.versions.electron)</script>.
-        </p>
-        <p lang="ja">
-          これは<em>日本語</em>の文章です。
-        </p>
-      </div>
+    <div id="ctrl">
+      <header class="toolbar toolbar-header">
+        <div class="toolbar-actions">
+          <div class="btn-group">
+            <button class="btn btn-default">
+              <span class="icon icon-popup"></span>
+            </button>
+            <button class="btn btn-default">
+              <span class="icon icon-plus"></span>
+            </button>
+          </div>
+
+          <div class="btn-group">
+            <span class="icon icon-home"></span>
+            <input class="form-control" type="url" value="http://example.com/">
+          </div>
+
+          <div class="btn-group">
+            <span class="icon icon-search"></span>
+            <input class="form-control" type="number" value="0">
+          </div>
+
+          <div class="btn-group">
+            <span class="icon icon-hourglass"></span>
+            <input class="form-control" type="number" value="0">
+          </div>
+
+          <div class="btn-group">
+            <button class="btn btn-default">
+              <span class="icon icon-left-open"></span>
+            </button>
+            <button class="btn btn-default">
+              <span class="icon icon-right-open"></span>
+            </button>
+          </div>
+
+          <button class="btn btn-default">
+            <span class="icon icon-cancel-circled"></span>
+          </button>
+        </div>
+      </header>
     </div>
+
+    <webview id="view" src="http://example.com/" autosize="on"></webview>
   </body>
 </html>

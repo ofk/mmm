@@ -1,11 +1,30 @@
-body {
-  padding-top: 20px;
-  padding-bottom: 20px;
+.btn-group > .form-control {
+  padding: 3px 8px;
+  font-size: 12px;
+  line-height: 1.4;
+  min-height: 24px;
 }
 
-p {
-  & em:lang(ja) {
-    font-style: normal;
-    text-emphasis: sesame;
-  }
+.btn-group > .form-control[type="url"] {
+  width: 200px;
+}
+
+.btn-group > .form-control[type="number"] {
+  width: 50px;
+}
+
+#ctrl, #view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+#ctrl {
+  z-index: 10;
+  -webkit-app-region: drag;
+}
+
+#view {
+  bottom: 0;
 }
