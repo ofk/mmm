@@ -6,6 +6,8 @@ import './renderer.css';
 
 const id = window.location.hash.toString().replace(/^#/, '');
 const viewNode = document.querySelector('#view');
+let viewTimer;
+let viewLoaded;
 
 const loadedView = () => {
   if (viewNode.getAttribute('data-loaded') !== 'true') return;
@@ -17,6 +19,7 @@ const loadedView = () => {
 viewNode.addEventListener('did-finish-load', () => {
   viewNode.setAttribute('data-loaded', 'true');
   loadedView();
+  if (viewLoaded) viewLoaded();
 });
 
 const loadView = (url) => {
@@ -30,6 +33,19 @@ const setViewZoomLevel = (zoom) => {
   loadedView();
 };
 
+const setViewLoaded = (app, view, menuVisibility) => {
+  if (menuVisibility) {
+    viewLoaded = null;
+    clearTimeout(viewTimer);
+  } else {
+    viewLoaded = () => {
+      viewTimer = setTimeout(() => {
+        app.jumpView(1);
+      }, view.time * 1000);
+    };
+  }
+};
+
 const app = new Vue({
   el: '#ctrl',
   data: {
@@ -40,9 +56,14 @@ const app = new Vue({
   },
   watch: {
     view(newView) {
+      setViewLoaded(this, newView, this.menuVisibility);
       loadView(newView.url || 'about:blank');
       setViewZoomLevel(newView.zoom || 0);
       this.editingView = Object.assign({}, newView);
+    },
+    menuVisibility(newMenuVisibility) {
+      setViewLoaded(this, this.view, newMenuVisibility);
+      if (viewLoaded) viewLoaded();
     },
   },
   computed: {
