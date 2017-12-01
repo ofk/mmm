@@ -50,7 +50,7 @@ app.on('window-all-closed', () => {
   app.quit();
 });
 
-let visibility = true;
+let menuVisibility = true;
 
 ipcMain.on('updateConfig', (event, { id, config }) => {
   const info = windowsInfo.get(id);
@@ -60,7 +60,7 @@ ipcMain.on('updateConfig', (event, { id, config }) => {
 ipcMain.on('requestConfig', (event, { id }) => {
   event.sender.send('loadConfig', {
     config: windowsInfo.get(id).config,
-    visibility,
+    menuVisibility,
   });
 });
 
@@ -68,12 +68,12 @@ ipcMain.on('toggleMenu', () => {
   const appConfig = {
     panels: [],
   };
-  visibility = !visibility;
+  menuVisibility = !menuVisibility;
   windowsInfo.forEach(({ window, config }) => {
     appConfig.panels.push(Object.assign({}, config, { bounds: window.getBounds() }));
-    window.webContents.send('toggleMenu', { visibility });
+    window.webContents.send('toggleMenu', { menuVisibility });
   });
-  if (!visibility) {
+  if (!menuVisibility) {
     fs.writeFileSync(appConfigPath, JSON.stringify(appConfig, null, '  '));
   }
 });

@@ -36,7 +36,7 @@ const app = new Vue({
     views: null,
     viewIndex: 0,
     editingView: {},
-    visibility: false,
+    menuVisibility: false,
   },
   watch: {
     view(newView) {
@@ -87,15 +87,15 @@ const app = new Vue({
   },
 });
 
-ipcRenderer.on('loadConfig', (event, { config, visibility }) => {
+ipcRenderer.on('loadConfig', (event, { config, menuVisibility }) => {
   app.views = config.views || [];
-  app.visibility = visibility;
+  app.menuVisibility = menuVisibility;
 });
 
 ipcRenderer.send('requestConfig', { id });
 
-ipcRenderer.on('toggleMenu', (event, { visibility }) => {
-  app.visibility = visibility;
+ipcRenderer.on('toggleMenu', (event, { menuVisibility }) => {
+  app.menuVisibility = menuVisibility;
 });
 
 window.addEventListener('keydown', (event) => {
