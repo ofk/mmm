@@ -1,7 +1,7 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "name": "mmm",
+  "private": true,
+  "description": "MMM is Minimal Multiple MMM",
   "main": "dist/main.js",
   "scripts": {
     "prebuild": "rimraf dist",
@@ -12,16 +12,6 @@
     "start": "npm run open",
     "lint": "eslint --fix ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
-  "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
-  ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
   "devDependencies": {
     "autoprefixer": "^7.1.6",
     "babel-core": "^6.26.0",
@@ -47,8 +37,5 @@
     "postcss-scss": "^1.0.2",
     "rimraf": "^2.6.2",
     "webpack": "^3.9.1"
-  },
-  "dependencies": {
-    "bootstrap": "^3.3.7"
   }
 }
