@@ -120,7 +120,7 @@ ipcRenderer.on('toggleMenu', (event, { menuVisibility }) => {
 });
 
 window.addEventListener('keydown', (event) => {
-  if (event.ctrlKey && event.keyCode === 77) { // ctrl + m
+  if (event.ctrlKey && event.shiftKey && event.keyCode === 77) { // ctrl + shift + m
     ipcRenderer.send('toggleMenu');
   }
 });
