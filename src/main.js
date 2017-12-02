@@ -4,6 +4,7 @@ import path from 'path';
 import url from 'url';
 import fs from 'fs';
 
+let menuVisibility = false;
 const windowsInfo = new Map();
 const createWindow = (config) => {
   let window = new BrowserWindow(Object.assign({ width: 800, height: 600, frame: false }, config.bounds || {}));
@@ -32,8 +33,10 @@ app.on('ready', () => {
   try {
     appConfig = JSON.parse(fs.readFileSync(appConfigPath, 'utf-8'));
   } catch (e) {
-    appConfig = {};
+    appConfig = { menuVisibility: true };
   }
+
+  menuVisibility = !!appConfig.menuVisibility;
 
   if (!appConfig.panels) {
     appConfig.panels = [];
@@ -49,8 +52,6 @@ app.on('ready', () => {
 app.on('window-all-closed', () => {
   app.quit();
 });
-
-let menuVisibility = true;
 
 ipcMain.on('updateConfig', (event, { id, config }) => {
   const info = windowsInfo.get(id);
