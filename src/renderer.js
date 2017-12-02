@@ -69,7 +69,7 @@ const app = new Vue({
   computed: {
     view() {
       const view = (this.views && this.views[this.viewIndex]) || {};
-      return Object.assign({ zoom: 0, time: 1 }, view);
+      return Object.assign({ zoom: 0, time: 60 }, view);
     },
   },
   methods: {
