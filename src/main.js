@@ -11,6 +11,8 @@ let menuVisibility = false;
 const windowsInfo = new Map();
 const createWindow = (config) => {
   let window = new BrowserWindow(Object.assign({ width: 800, height: 600, frame: false }, config.bounds || {}));
+  window.setAlwaysOnTop(!menuVisibility);
+
   const id = window.id.toString();
 
   window.loadURL(url.format({
@@ -75,6 +77,7 @@ ipcMain.on('toggleMenu', () => {
   menuVisibility = !menuVisibility;
   windowsInfo.forEach(({ window, config }) => {
     appConfig.panels.push(Object.assign({}, config, { bounds: window.getBounds() }));
+    window.setAlwaysOnTop(!menuVisibility);
     window.webContents.send('toggleMenu', { menuVisibility });
   });
   if (!menuVisibility) {
