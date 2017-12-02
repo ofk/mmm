@@ -4,6 +4,9 @@ import path from 'path';
 import url from 'url';
 import fs from 'fs';
 
+const shouldQuit = app.makeSingleInstance(() => {});
+if (shouldQuit) app.quit();
+
 let menuVisibility = false;
 const windowsInfo = new Map();
 const createWindow = (config) => {
