@@ -1,4 +1,5 @@
 #!/bin/sh
 
-find packages ! -path packages -type f -maxdepth 1 | xargs rm -rf
-find packages ! -path packages -type d -maxdepth 1 -exec zip -r {}.zip {} \;
+cd packages
+find . -type f -depth 1 | xargs rm -rf
+find . -type d -depth 1 -exec zip -r {}.zip {} \;
