@@ -11,6 +11,7 @@
     "prestart": "npm run build",
     "start": "npm run open",
     "package": "electron-packager . --out=packages --ignore=\"/(\\.|.+?\\.(md|log)|config.json|package-lock\\.json|yarn\\.lock|node_modules|packages|scripts|src)\"",
+    "archive": "scripts/archiver.sh",
     "lint": "eslint --fix ."
   },
   "devDependencies": {
