@@ -10,6 +10,7 @@
     "open": "electron .",
     "prestart": "npm run build",
     "start": "npm run open",
+    "package": "electron-packager . --out=packages --ignore=\"/(\\.|.+?\\.(md|log)|config.json|package-lock\\.json|yarn\\.lock|node_modules|packages|scripts|src)\"",
     "lint": "eslint --fix ."
   },
   "devDependencies": {
